@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Personal Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="registration.css" />
+    <script>
+      var listDepartments = ["CSE", "IT", "MECH", "CHEM", "CIVIL", "EEE"];
+      function changeBorder(element) {
+        element.style.border = "solid black";
+        element.style.background = "gray";
+        element.style.color = "white";
+      }
+      function showWarning(element) {
+        if (element.value.length > 10 || element.value.length < 10) {
+          element.style.border = "black solid 1px";
+          element.style.background = "yellow";
+        } else {
+          element.style.background = "white";
+          element.style.color = "black";
+        }
+      }
+      function reverseChange(element) {
+        element.style.border = "solid white";
+        element.style.background = "white";
+        element.style.color = "black";
+      }
+      function drag(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+      }
+      function drop(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        var STR = document.getElementById(data).innerHTML;
+        ev.target.value += STR + ";";
+      }
+      function tabulate() {
+        var myForm = document.getElementById("form1");
+        let formData = new FormData(myForm);
+        document.write(
+          '<link rel="stylesheet" href="styles.css"><style>table, th, td{ border: 1px solid gray ;}</style>'
+        );
+        document.writeln("<h1>FORM RESPONSE RECEIVED</h1>");
+        document.writeln(
+          "<div class='box' style='width: fit-content;'><table style='width: 400px;margin:10px;font-size:25px;'>"
+        );
+        document.writeln(
+          "<tr><th>Name</th><td>" +
+            formData.get("name") +
+            "</td></tr><tr><th>College Name</th><td>" +
+            formData.get("college") +
+            "</td></tr><tr><th>College Address</th><td>" +
+            formData.get("address") +
+            "</td></tr><tr><th>Pincode</th><td>" +
+            formData.get("pin") +
+            "</td></tr><tr><th>Age</th><td>" +
+            formData.get("age") +
+            "</td></tr><tr><th>DOB</th><td>" +
+            formData.get("dob") +
+            "</td></tr><tr><th>Gender</th><td>" +
+            formData.get("gender") +
+            "</td></tr><tr><th>Department</th><td>" +
+            formData.get("department") +
+            "</td></tr><tr><th>Contact Number</th><td>" +
+            formData.get("mobile") +
+            "</td></tr><tr><th>Email</th><td>" +
+            formData.get("email") +
+            "</td></tr><tr><th>Programming skills</th><td>" +
+            formData.get("prog") +
+            "</td></tr><tr><th>Hobbies</th><td>" +
+            formData.getAll("hobbies") +
+            "</td></tr></table></div>"
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>Event Registration</h1>
+    </header>
+    <aside>
+      <div id="digital-clock"></div>
+      <script>
+        function Time() {
+          var date = new Date();
+          var hours = date.getHours();
+          var mins = date.getMinutes();
+          var secs = date.getSeconds();
+          var meridian;
+          if (hours >= 12) {
+            meridian = "PM";
+          } else {
+            meridian = "AM";
+          }
+          // Converting the hour in 12-hour format
+          if (hours == 0) {
+            hours = 12;
+          } else {
+            if (hours > 12) {
+              hours = hours - 12;
+            }
+          }
+          document.getElementById("digital-clock").innerHTML =
+            hours + ":" + mins + ":" + secs + " " + meridian;
+          setTimeout(Time, 1000);
+        }
+        Time();
+      </script>
+    </aside>
+    <div class="form">
+      <form id="form1" action="http://localhost:8080/SQLpgm/form" method="post">
+        <div class="col1">
+          <div class="input">
+            <label for="name">First name:</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              onfocus="changeBorder(this)"
+              onblur="reverseChange(this)"
+              required
+            />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="collegeName">College Name:</label>
+            <input
+              type="text"
+              id="collegeName"
+              name="collegeName"
+              pattern="[a-zA-Z]+"
+              oninvalid="alert('Enter Valid College name')"
+              required
+            />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="collegeAddress">College Address : </label>
+            <textarea
+              name="collegeAddress"
+              id="collegeAddress"
+              cols="40"
+              rows="5"
+              pattern="[0-9a-zA-Z]+"
+              onselect="alert('Enter the college address')"
+            ></textarea>
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="pin">Pin:</label>
+            <input
+              type="text"
+              id="pin"
+              name="pin"
+              pattern="[0-9]{1,6}"
+              oninvalid="alert('Pincode not valid')"
+            />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="age">Age:</label>
+            <input type="text" id="age" name="age" pattern="[0-9]+" />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="dob">DOB:</label>
+            <input type="date" id="dob" name="dob" required />
+          </div>
+          <br /><br />
+          <div id="radio" class="input">
+            <label for="gender" id="gender">Gender :</label>
+            <input
+              type="radio"
+              id="male"
+              name="gender"
+              value="male"
+              required
+              oninvalid="alert('Enter gender')"
+            />
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female" />
+            <label for="female">Female</label>
+          </div>
+          <br /><br />
+        </div>
+        <div class="col2">
+          <div class="input">
+            <label for="department">Department:</label>
+            <select
+              id="department"
+              name="department"
+              onchange="alert('Your chosen department is '+this.value)"
+              required
+            >
+              <option value="CSE">CSE</option>
+              <option value="IT">IT</option>
+              <option value="MECH">MECH</option>
+              <option value="CIVIL">CIVIL</option>
+              <option value="BME">BME</option>
+            </select>
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="contactNumber">Contact Number:</label>
+            <input
+              type="text"
+              id="contactNumber"
+              name="contactNumber"
+              onchange="showWarning(this)"
+              oninvalid="alert('Enter a valid mobile number')"
+              required
+            />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="email">Email :</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              pattern=".+@.+\..+"
+              required
+            />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="progskills">Programmiung skills</label>
+            <input
+              type="text"
+              name="prog"
+              id="progskills"
+              ondrop="drop(event)"
+              ondragover="allowDrop(event)"
+            /><br />
+            <ul>
+              <li
+                class="draglist"
+                id="id1"
+                draggable="true"
+                ondragstart="drag(event)"
+              >
+                Java
+              </li>
+              <li
+                class="draglist"
+                id="id2"
+                draggable="true"
+                ondragstart="drag(event)"
+              >
+                Python
+              </li>
+              <li
+                class="draglist"
+                id="id3"
+                draggable="true"
+                ondragstart="drag(event)"
+              >
+                C++
+              </li>
+              <li
+                class="draglist"
+                id="id4"
+                draggable="true"
+                ondragstart="drag(event)"
+              >
+                Go
+              </li>
+            </ul>
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="hobbies">Hobbies : </label>
+            <input type="checkbox" id="hobby1" name="hobby1" value="football" />
+            <label for="hobby1"> Foot Ball </label><br />
+            <input type="checkbox" id="hobby2" name="hobby2" value="gaming" />
+            <label for="hobby2">Gaming</label><br />
+            <input type="checkbox" id="hobby3" name="hobby3" value="movies" />
+            <label for="hobby3">Movies</label><br />
+          </div>
+          <br /><br />
+          <div class="input">
+            <label for="file">Consent Letter :</label>
+            <input type="file" id="file" name="file" />
+          </div>
+          <br /><br />
+          <input type="submit" value="Submit" />
+        </div>
+      </form>
+    </div>
+    <footer>
+      <div>Created by Vaseekaran</div>
+      <div>Contact SSN Admins</div>
+      <address>omr,kalavakam,603110</address>
+    </footer>
+  </body>
+</html>
